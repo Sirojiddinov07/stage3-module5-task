@@ -11,11 +11,9 @@ import java.util.List;
 
 @Mapper
 public interface AuthorModelMapper {
-
     AuthorResponseDTO modelToDTO(AuthorModel authorModel);
     List<AuthorResponseDTO> modelListToDtoList (List<AuthorModel> newsList);
     @Mappings(value = { @Mapping(target = "createDate", ignore = true),
-                        @Mapping(target = "lastUpdateDate", ignore = true),
-                        @Mapping(target = "id", ignore = true)})
+                        @Mapping(target = "lastUpdateDate", ignore = true)})
     AuthorModel dtoToModel (AuthorRequestDTO requestDTO);
 }

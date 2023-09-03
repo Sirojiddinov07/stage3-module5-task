@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface NewsModelMapper {
-    @Mapping(target = "tagsSet", source = "tags")
+    @Mapping(target = "title", source = "tags")
     @Mapping(target = "authorId", source = "author.id")
     NewsResponseDTO modelToDTO(NewsModel newsModel);
     List<NewsResponseDTO> modelListToDtoList (List<NewsModel> newsList);
@@ -18,8 +18,7 @@ public interface NewsModelMapper {
             @Mapping(target = "lastUpdateDate", ignore = true),
             @Mapping(target = "author.id", source = "authorId"),
             @Mapping(target = "tags", ignore = true),
-            @Mapping(target = "comments", ignore = true),
-            @Mapping(target = "id", ignore = true)
+            @Mapping(target = "comments", ignore = true)
     })
     NewsModel dtoToModel (NewsRequestDTO requestDTO);
 

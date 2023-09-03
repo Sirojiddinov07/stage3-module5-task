@@ -48,7 +48,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public NewsResponseDTO create(NewsRequestDTO createRequest) {
         validator.checkNewsDto(createRequest);
-        Set<Long> tagIds = createRequest.tagIds();
+        Set<Long> tagIds = (Set<Long>) createRequest.getNewsTagsIds();
         NewsModel model = newsMapper.dtoToModel(createRequest);
         for (Long id : tagIds){
             if (tagRepository.existById(id)){
@@ -62,7 +62,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public NewsResponseDTO update(NewsRequestDTO updateRequest) {
         validator.checkNewsDto(updateRequest);
-        Set<Long> tagIds = updateRequest.tagIds();
+        Set<Long> tagIds = (Set<Long>) updateRequest.getNewsTagsIds();
         NewsModel model = newsMapper.dtoToModel(updateRequest);
         checkNewsExist(model.getId());
         for (Long id : tagIds){

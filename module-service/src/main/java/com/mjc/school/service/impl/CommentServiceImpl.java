@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentResponseDTO create(CommentRequestDTO createRequest) {
         validator.checkCommentDto(createRequest);
         CommentModel model = mapper.dtoToModel(createRequest);
-        NewsModel news = newsRepo.readById(createRequest.newsId()).get();
+        NewsModel news = newsRepo.readById(createRequest.getNewsId()).get();
         model.setNews(news);
         CommentModel newCommentModel = commentRepo.create(model);
         news.addComment(newCommentModel);
@@ -57,9 +57,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentResponseDTO update(CommentRequestDTO updateRequest) {
         validator.checkCommentDto(updateRequest);
+        readById(updateRequest.getId());
         CommentModel model = mapper.dtoToModel(updateRequest);
-        readById(model.getId());
-        model.setNews(newsRepo.readById(updateRequest.newsId()).get());
+        model.setNews(newsRepo.readById(updateRequest.getNewsId()).get());
 
         CommentModel updatedModel = commentRepo.update(model);
         return mapper.modelToDTO(updatedModel);

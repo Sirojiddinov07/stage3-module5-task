@@ -12,8 +12,9 @@ public class TagModel implements BaseEntity<Long>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", unique = true)
+    @Column(name = "name")
     private String name;
+
 
     @ManyToMany(mappedBy = "tags", cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH} )
     private Set<NewsModel> news = new HashSet<>();

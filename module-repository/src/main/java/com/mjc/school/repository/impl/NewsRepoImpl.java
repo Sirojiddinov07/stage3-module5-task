@@ -35,19 +35,19 @@ public class NewsRepoImpl extends AbstractRepo<NewsModel, Long> implements NewsR
             Predicate tagIdCheck = cb.equal(tags.get("id"), tagId);
             cr.select(root).where(tagIdCheck);
         }
-        if (tagName != null && !tagName.trim().isEmpty()){
+        if (tagName != null && !tagName.isBlank()){
             Predicate tagNameCheck = cb.equal(tags.get("name"), tagName);
             cr.select(root).where(tagNameCheck);
         }
-        if (authorName != null && !authorName.trim().isEmpty()){
+        if (authorName != null && !authorName.isBlank()){
             Predicate authorCheck = cb.equal(author.get("name"), authorName);
             cr.select(root).where(authorCheck);
         }
-        if (title != null && !title.trim().isEmpty()){
+        if (title != null && !title.isBlank()){
             Predicate titleCheck  = cb.equal(root.get("title"), title);
             cr.select(root).where(titleCheck);
         }
-        if (content != null && !content.trim().isEmpty()){
+        if (content != null && !content.isBlank()){
             Predicate contentCheck  = cb.equal(root.get("content"), content);
             cr.select(root).where(contentCheck);
         }

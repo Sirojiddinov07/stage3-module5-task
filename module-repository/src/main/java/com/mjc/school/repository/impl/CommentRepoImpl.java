@@ -18,8 +18,8 @@ public class CommentRepoImpl extends AbstractRepo
     }
 
     @Override
-    public List getCommentsByNewsId(Long newsId) {
+    public List<CommentModel> getCommentsByNewsId(Long newsId) {
         NewsModel newsModel = entityManager.find(NewsModel.class, newsId);
-        return List.of(newsModel.getComments().stream().toArray());
+        return newsModel.getComments().stream().toList();
     }
 }

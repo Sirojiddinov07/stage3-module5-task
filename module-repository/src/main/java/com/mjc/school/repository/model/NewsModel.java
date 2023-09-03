@@ -19,7 +19,7 @@ public class NewsModel implements BaseEntity<Long>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", unique = true)
+    @Column(name = "title")
     private String title;
 
     @Column(name = "content")

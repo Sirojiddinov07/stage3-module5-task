@@ -16,8 +16,8 @@ public class TagReposImpl extends AbstractRepo<TagModel, Long> implements TagRep
     }
 
     @Override
-    public List getTagsByNewsId(Long newsId) {
+    public List<TagModel> getTagsByNewsId(Long newsId) {
         NewsModel newsModel = entityManager.find(NewsModel.class, newsId);
-        return List.of(newsModel.getTags().stream().toArray());
+        return newsModel.getTags().stream().toList();
     }
 }
