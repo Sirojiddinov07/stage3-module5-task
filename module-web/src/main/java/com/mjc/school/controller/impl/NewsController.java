@@ -125,11 +125,11 @@ public class NewsController implements BaseController<NewsRequestDTO, NewsRespon
             @ApiResponse(code = 500, message = "Application failed to process the request")
     })
     public ResponseEntity<List<NewsResponseDTO>> readByParams(
-            @RequestParam(name = "tag_id", required = false) Long tagId,
-            @RequestParam(name = "tag_name", required = false) String tagName,
-            @RequestParam(name = "author_name", required = false) String authorName,
-            @RequestParam(name = "title", required = false) String title,
-            @RequestParam(name = "content", required = false) String content){
+                            @RequestParam(name = "tag_id", required = false) Long tagId,
+                            @RequestParam(name = "tag_name", required = false) String tagName,
+                            @RequestParam(name = "author_name", required = false) String authorName,
+                            @RequestParam(name = "title", required = false) String title,
+                            @RequestParam(name = "content", required = false) String content){
         return new ResponseEntity<>(service.readByParams(tagId, tagName, authorName, title, content), HttpStatus.OK);
     }
 
@@ -183,8 +183,8 @@ public class NewsController implements BaseController<NewsRequestDTO, NewsRespon
     public ResponseEntity<NewsResponseDTO> updatePart(@PathVariable("id") Long id, @RequestBody JsonPatch patch) {
         try {
             NewsResponseDTO news = service.readById(id);
-            NewsRequestDTO request = new NewsRequestDTO(news.getTitle(), news.getContent(), news.getAuthorId(),
-                    news.getNewsTagsIds().stream().collect(Collectors.toSet()));
+            NewsRequestDTO request = new NewsRequestDTO(news.title(), news.content(), news.authorId(),
+                                                        news.tagsSet().stream().map(x-> x.id()).collect(Collectors.toSet()));
             NewsRequestDTO patchedNews = applyPatch(patch, request);
             return new ResponseEntity<>(service.update(patchedNews),HttpStatus.OK);
         }

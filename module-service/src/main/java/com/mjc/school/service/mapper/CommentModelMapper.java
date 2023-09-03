@@ -15,7 +15,7 @@ public interface CommentModelMapper {
     @Mapping(target = "newsId", source = "news.id")
     CommentResponseDTO modelToDTO(CommentModel commentModel);
 
-    List<CommentResponseDTO> modelListToDtoList (Object[] commentList);
+    List<CommentResponseDTO> modelListToDtoList (List<CommentModel> commentList);
 
     @Mappings(value = {@Mapping(target = "createDate", ignore = true),
             @Mapping(target = "lastUpdateDate", ignore = true),

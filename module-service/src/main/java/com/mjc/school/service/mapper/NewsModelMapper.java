@@ -7,11 +7,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import java.util.List;
-import java.util.Set;
 
 @Mapper
 public interface NewsModelMapper {
-    @Mapping(target = "title", source = "tags")
+    @Mapping(target = "tagsSet", source = "tags")
     @Mapping(target = "authorId", source = "author.id")
     NewsResponseDTO modelToDTO(NewsModel newsModel);
     List<NewsResponseDTO> modelListToDtoList (List<NewsModel> newsList);
@@ -19,7 +18,8 @@ public interface NewsModelMapper {
             @Mapping(target = "lastUpdateDate", ignore = true),
             @Mapping(target = "author.id", source = "authorId"),
             @Mapping(target = "tags", ignore = true),
-            @Mapping(target = "comments", ignore = true)
+            @Mapping(target = "comments", ignore = true),
+            @Mapping(target = "id", ignore = true)
     })
     NewsModel dtoToModel (NewsRequestDTO requestDTO);
 

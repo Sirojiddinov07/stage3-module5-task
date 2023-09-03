@@ -1,7 +1,6 @@
-rootProject.name = 'stage3-module2-task'
+rootProject.name = 'stage3-module5-task'
 
-include 'module-main'
-include 'module-service'
 include 'module-repository'
+include 'module-service'
 include 'module-web'
 

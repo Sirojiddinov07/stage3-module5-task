@@ -13,7 +13,7 @@ public interface TagModelMapper {
 
     TagResponseDTO modelToDTO(TagModel model);
 
-    List<TagResponseDTO> modelListToDtoList(Object[] modelList);
+    List<TagResponseDTO> modelListToDtoList(List<TagModel> modelList);
 
     @Mapping(target = "news", ignore = true)
     @Mapping(target = "id", ignore = true)

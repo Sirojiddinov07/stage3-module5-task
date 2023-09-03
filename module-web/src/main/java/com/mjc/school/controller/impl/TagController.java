@@ -7,6 +7,7 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.mjc.school.controller.BaseController;
 import com.mjc.school.service.TagService;
+import com.mjc.school.service.dto.NewsResponseDTO;
 import com.mjc.school.service.dto.TagRequestDTO;
 import com.mjc.school.service.dto.TagResponseDTO;
 import io.swagger.annotations.Api;
@@ -19,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/v1/tags")
@@ -106,7 +106,7 @@ public class TagController implements BaseController<TagRequestDTO, TagResponseD
     public ResponseEntity<TagResponseDTO> updatePart(@PathVariable("id") Long id, @RequestBody JsonPatch patch) {
         try {
             TagResponseDTO tag = service.readById(id);
-            TagRequestDTO requestTag = new TagRequestDTO(tag.getName());
+            TagRequestDTO requestTag = new TagRequestDTO(tag.name());
             TagRequestDTO patchedTag = applyPatchToTag(patch, requestTag);
             return new ResponseEntity<>(service.update(patchedTag),HttpStatus.OK);
         }

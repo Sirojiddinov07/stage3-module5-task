@@ -40,9 +40,9 @@ public class AuthorController implements BaseController<AuthorRequestDTO, Author
             @ApiResponse(code = 500, message = "Application failed to process the request"),
     })
     public ResponseEntity<List<AuthorResponseDTO>> readAll(
-            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(value = "limit", required = false, defaultValue = "5") int limit,
-            @RequestParam(value = "sort_by", required = false, defaultValue = "name") String sortBy)
+                            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                            @RequestParam(value = "limit", required = false, defaultValue = "5") int limit,
+                            @RequestParam(value = "sort_by", required = false, defaultValue = "name") String sortBy)
     {
         List<AuthorResponseDTO> authors = service.readAll(page, limit, sortBy);
         return new ResponseEntity<>(authors, HttpStatus.OK);
@@ -103,7 +103,7 @@ public class AuthorController implements BaseController<AuthorRequestDTO, Author
     public ResponseEntity<AuthorResponseDTO> updatePart(@PathVariable("id") Long id, @RequestBody JsonPatch patch) {
         try {
             AuthorResponseDTO author = service.readById(id);
-            AuthorRequestDTO request = new AuthorRequestDTO(author.getName());
+            AuthorRequestDTO request = new AuthorRequestDTO(author.name());
             AuthorRequestDTO patchedAuthor = applyPatch(patch, request);
 
             return new ResponseEntity<>(service.update(patchedAuthor),HttpStatus.OK);

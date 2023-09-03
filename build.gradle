@@ -1,11 +1,17 @@
 plugins {
     id 'java-base'
+    id 'java'
+    id 'jacoco'
+    id 'org.sonarqube' version "4.2.0.3129"
+    id "org.springframework.boot" version "${springBootVersion}"
 }
 
 wrapper {
     gradleVersion = gradlewVersion
 }
-
+jacoco {
+    toolVersion = "0.8.9"
+}
 subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
@@ -19,39 +25,42 @@ subprojects {
     }
 
     dependencies {
-
-        testImplementation "org.springframework:spring-test:$springVersion"
-        testImplementation "org.junit.jupiter:junit-jupiter-api:$jupiterVersion"
-        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jupiterVersion"
-        testImplementation "com.tngtech.archunit:archunit:$archUnitVersion"
-        testImplementation "com.tngtech.archunit:archunit-junit5:1.0.0"
-        testImplementation 'org.assertj:assertj-core:3.21.0'
-        compileOnly 'org.projectlombok:lombok:0.11.0'
-        implementation 'com.github.java-json-tools:json-patch:1.13'
-        implementation "org.springframework.boot:spring-boot-starter-data-jpa:2.7.7"
         implementation "org.springframework:spring-context:$springVersion"
+        implementation "org.springframework.boot:spring-boot-starter-data-jpa:2.7.7"
+        implementation "org.springframework.boot:spring-boot-starter-web:$springWebVersion"
+        implementation "javax.xml.bind:jaxb-api:2.3.1"
+
         annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
         implementation "org.mapstruct:mapstruct:$mapstructVersion"
 
-        implementation 'io.springfox:springfox-boot-starter:3.0.0'
-        testImplementation 'io.rest-assured:rest-assured:5.3.1'
-
+        testImplementation "com.tngtech.archunit:archunit-junit5:$archUnitVersion"
+        testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.2'
 
     }
     test {
         useJUnitPlatform()
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        dependsOn test
+        reports {
+            xml.required.set(true)
+            html.required.set(false)
+        }
     }
 }
 
-task repack(type: Jar, dependsOn: ':module-main:build') {
-    if (findProject(':module-main') != null) {
-        entryCompression = ZipEntryCompression.STORED
-        def buildJar = zipTree("${project(':module-main').buildDir}/libs/module-main.jar")
-        from(buildJar) { into('/') }
-        manifest {
-            attributes(
-                    'Main-Class': 'com.mjc.school.Main'
-            )
-        }
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+sonarqube {
+    properties {
+        property "sonar.sourceEncoding", "UTF-8"
     }
 }

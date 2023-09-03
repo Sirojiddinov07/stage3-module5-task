@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CommentRepoImpl extends AbstractRepo
-        <CommentModel, Long> implements CommentRepository {
+public class CommentRepositoryImpl extends AbstractRepository<CommentModel, Long> implements CommentRepository {
 
     @Override
     protected void setFields(CommentModel oldModel, CommentModel newModel) {
@@ -18,8 +17,8 @@ public class CommentRepoImpl extends AbstractRepo
     }
 
     @Override
-    public List getCommentsByNewsId(Long newsId) {
+    public List<CommentModel> getCommentsByNewsId(Long newsId) {
         NewsModel newsModel = entityManager.find(NewsModel.class, newsId);
-        return List.of(newsModel.getComments().stream().toArray());
+        return newsModel.getComments().stream().toList();
     }
 }

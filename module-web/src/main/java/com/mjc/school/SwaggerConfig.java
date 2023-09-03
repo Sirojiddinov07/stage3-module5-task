@@ -27,7 +27,7 @@ public class SwaggerConfig {
     private ApiInfo apiMetaInfo() {
         return new ApiInfoBuilder().title("News management application REST API")
                 .description("News management application REST API with CRUD operations")
-                .contact(new Contact("MJC School", "https://mjc.school/", "axmedovabdulaziz2001@gmail.com"))
+                .contact(new Contact("MJC School", "https://mjc.school/", "sirojidinovsavron@gmail.com"))
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .version("0.1-SNAPSHOT")

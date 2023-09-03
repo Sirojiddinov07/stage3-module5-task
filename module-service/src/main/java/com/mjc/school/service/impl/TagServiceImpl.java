@@ -32,7 +32,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<TagResponseDTO> readAll(int page, int limit, String sortBy) {
-        return mapper.modelListToDtoList(new List[]{tagRepo.readAll(page, limit, sortBy)});
+        return mapper.modelListToDtoList(tagRepo.readAll(page, limit, sortBy));
     }
 
     @Override
@@ -73,7 +73,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<TagResponseDTO> getTagsByNewsId(Long newsId) {
         validator.validateNewsExist(newsId);
-        Object[] tags = tagRepo.getTagsByNewsId(newsId);
+        List<TagModel> tags = tagRepo.getTagsByNewsId(newsId);
         return mapper.modelListToDtoList(tags);
     }
 }

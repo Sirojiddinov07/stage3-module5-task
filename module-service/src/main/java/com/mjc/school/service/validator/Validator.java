@@ -27,33 +27,32 @@ public class Validator {
     private static final int TAG_MIN_LENGTH = 3;
     private static final int TAG_MAX_LENGTH = 15;
 
-    public Validator(BaseRepository<AuthorModel, Long> authorRepo, 
-    BaseRepository<NewsModel, Long> newsRepo) {
+    public Validator(BaseRepository<AuthorModel, Long> authorRepo, BaseRepository<NewsModel, Long> newsRepo) {
         this.authorRepo = authorRepo;
         this.newsRepo = newsRepo;
     }
 
     public void checkNewsDto(NewsRequestDTO dto){
 
-        validateLength(dto.getContent(), TITLE_MIN_LENGTH, TITLE_MAX_LENGTH, "CHECK_TITLE_LENGTH");
-        validateLength(dto.getContent(), CONTENT_MIN_LENGTH, CONTENT_MAX_LENGTH, "CHECK_CONTENT_LENGTH");
-        long authorId = dto.getAuthorId();
+        validateLength(dto.title(), TITLE_MIN_LENGTH, TITLE_MAX_LENGTH, "CHECK_TITLE_LENGTH");
+        validateLength(dto.content(), CONTENT_MIN_LENGTH, CONTENT_MAX_LENGTH, "CHECK_CONTENT_LENGTH");
+        long authorId = dto.authorId();
         if (!authorRepo.existById(authorId)){
             throw new NotFoundException(String.format(ErrorCodes.AUTHOR_NOT_EXIST.getMessage(),authorId));
         }
     }
 
     public void checkAuthorDto(AuthorRequestDTO dto){
-        validateLength(dto.getName(), AUTHOR_NAME_MIN_LENGTH, AUTHOR_NAME_MAX_LENGTH, "CHECK_AUTHOR_NAME_LENGTH");
+        validateLength(dto.name(), AUTHOR_NAME_MIN_LENGTH, AUTHOR_NAME_MAX_LENGTH, "CHECK_AUTHOR_NAME_LENGTH");
     }
 
     public void checkTagDto(TagRequestDTO dto){
-        validateLength(dto.getName(), TAG_MIN_LENGTH, TAG_MAX_LENGTH, "CHECK_TAG_NAME_LENGTH");
+        validateLength(dto.name(), TAG_MIN_LENGTH, TAG_MAX_LENGTH, "CHECK_TAG_NAME_LENGTH");
     }
 
     public void checkCommentDto(CommentRequestDTO dto){
-        validateLength(dto.getContent(), CONTENT_MIN_LENGTH, CONTENT_MAX_LENGTH, "CHECK_CONTENT_LENGTH");
-        long newsId = dto.getNewsId();
+        validateLength(dto.content(), CONTENT_MIN_LENGTH, CONTENT_MAX_LENGTH, "CHECK_CONTENT_LENGTH");
+        long newsId = dto.newsId();
         if (!newsRepo.existById(newsId)){
             throw new NotFoundException(String.format(ErrorCodes.NEWS_NOT_EXIST.getMessage(), newsId));
         }
