@@ -1,21 +1,39 @@
 pipeline {
     agent any
-     tools {
-        gradle 'GRADLE_HOME'
-    }
+
+
 
     stages {
-        stage('Project clone') {
+        stage('Checkout') {
             steps {
-            sh 'cd /var/lib/jenkins/workspace/Simple Job && rm -rf stage3-module5-task && git clone https://github.com/Sirojiddinov07/stage3-module5-task.git'
+                git 'https://github.com/Sirojiddinov07/stage3-module5-task.git'
+
             }
 
+
+        }
+         stage('Build') {
+            steps {
+                bat ' gradlew clean build'
+
+            }
 
 
         }
     }
 }
-
-
-
-
+def call() {
+    node {
+        timestamps {
+            ansiColor('xterm') {
+                try {
+                    powershell """
+                        throw new Exception("ERROR: This is a test Exception.")
+                    """
+                } catch (error) {
+                    println("Caught error: ${error.getMessage()}")
+                }
+            }
+        }
+    }
+}
