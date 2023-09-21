@@ -1,9 +1,6 @@
 pipeline {
     agent any
-     tools {
-                     // Install the Gradle version configured as "GRADLE_HOME" and add it to the path.
-                     gradle "GRADLE_HOME"
-                 }
+
 
 
 
