@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Sirojiddinov07/stage3-module5-task.git'
+                    git branch: 'main', url: 'https://github.com/ZakharSytoi/stage3-module5-task.git'
 
             }
         }
