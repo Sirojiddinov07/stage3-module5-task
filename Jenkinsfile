@@ -1,34 +1,35 @@
 pipeline {
-    agent any
-    stages {
-        stage('Checkout') {
-            steps {
-                    git branch: 'main', url: 'https://github.com/ZakharSytoi/stage3-module5-task.git'
+  agent any
 
-            }
+  stages {
+    stage('build') {
+      steps {
+        bat 'gradlew build'
+      }
+    }
+
+    stage('sonarqube') {
+      steps {
+        withSonarQubeEnv('sonarqube-server') {
+          bat 'gradlew sonar'
         }
 
-                 stage('Build') {
-                     steps {
-                         bat 'gradlew clean build'
-                     }
-                 }
-                 stage('Test') {
-                     steps {
-                         bat 'gradlew test'
-                     }
-                 }
-                 stage('SonarQube') {
-                     steps {
-                         withSonarQubeEnv(installationName:'sonar-scanner') {
-                          bat 'gradlew sonarqube'
-                         }
-                     }
-                 }
-                 stage('Deploy') {
-                     steps {
-                         bat 'gradlew deploy'
-                     }
-                 }
-             }
-         }
+      }
+    }
+
+    stage("Quality Gate") {
+        steps {
+            timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    }
+
+    stage('deploy') {
+      steps {
+        build 'stage4-task1-deploy'
+      }
+    }
+
+  }
+}
